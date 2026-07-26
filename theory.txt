@@ -1,0 +1,77 @@
+In app.py we have imported a lot of things:
+    from fastapi import Request
+        Request gives your function access to the incoming HTTP request (headers, cookies, URL, IP, etc.).
+        FastAPI already receives every request internally, but it only passes the Request object to your function if you explicitly ask for it.
+
+    from fastapi import UploadFile
+        UploadFile represents a file uploaded by the user and provides methods like .read() and properties like .filename.
+
+
+    from fastapi import file    
+        File() tells FastAPI that this parameter should be extracted from a file upload (multipart/form-data)
+        UploadFile specifies what the parameter is, while File() specifies where FastAPI should get it from
+
+
+
+    from fastapi.responses import HTMLResponse?
+        Import the HTMLResponse class from the fastapi.responses module so we can return HTML instead of the default JSON response.
+
+
+
+    from fastapi.staticfiles import StaticFiles:
+        We use StaticFiles when we want FastAPI to allow users (browsers) to directly access files from a specific folder.
+        Not every file should be served using StaticFiles.
+            project/
+            │
+            ├── static/
+            │   ├── style.css
+            │   ├── logo.png
+            │   └── script.js
+
+            app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+    from fastapi.templating import Jinja2Templates
+        This imports the Jinja2Templates class, which is used to load and render HTML template files.
+        It allows you to send dynamic data from Python to HTML before the page is returned to the browser.
+
+
+
+    from rag import create_vector_store, ask_question
+        Go to the rag.py file and import the functions create_vector_store and ask_question so I can use them in this file.
+
+    
+    from schemas import Question
+        Go to the schemas.py file and import function Question so that i can use it in this file.
+
+
+    
+
+
+fiass_index:
+    Folder that is used to store information about the document.
+    User Question
+      │
+      ▼
+    Convert question into an embedding
+        │
+        ▼
+    Search in index.faiss
+        │
+        ▼
+    FAISS returns the IDs of the most similar vectors
+        │
+        ▼
+    Use those IDs to look inside index.pkl
+        │
+        ▼
+    Retrieve the original text chunks
+        │
+        ▼
+    Send those text chunks + user's question to the LLM
+        │
+        ▼
+    LLM generates the final answer
+
+    index.fiass -> Stores Embedding vectors (used for faster similarity search).
+    index.pkl --> Stores text chunks + meta data as python objects (Retrieve the actual content corresponding to the vectors)

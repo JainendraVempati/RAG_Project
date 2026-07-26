@@ -1,0 +1,39 @@
+# Core LangChain
+langchain
+langchain-core
+langchain-community
+
+# Google Gemini
+langchain-google-genai
+google-generativeai
+
+# Vector Database
+chromadb
+
+# Embeddings & Tokenization
+sentence-transformers
+tiktoken
+
+# Document Loaders
+pypdf
+python-docx
+unstructured
+
+# Text Processing
+langchain-text-splitters
+
+# Web Search
+duckduckgo-search
+
+# UI
+streamlit
+
+# Environment Variables
+python-dotenv
+
+# Utilities
+pydantic
+requests
+
+# Optional (recommended)
+faiss-cpu

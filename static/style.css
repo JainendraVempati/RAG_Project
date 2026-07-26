@@ -1,0 +1,449 @@
+/* ========================= */
+/* General                   */
+/* ========================= */
+
+/* Universal reset — kills default browser margins/padding and
+   makes width/height calculations include border+padding (box-sizing) */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+
+    /* Dark navy background — matches the "classic dark UI" look */
+    background:#0f172a;
+
+    color:#ffffff;
+
+    min-height:100vh;
+
+    /* Centers the .container card both horizontally and vertically
+       on the page, regardless of screen size */
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+
+/* ========================= */
+/* Container                 */
+/* ========================= */
+
+/* The single card that holds Upload / Select / Ask / Answer */
+.container{
+
+    width:900px;
+
+    background:#1e293b;
+
+    border-radius:18px;
+
+    padding:40px;
+
+    /* Soft, large drop shadow gives the card some depth against
+       the darker page background */
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+
+    border:1px solid #334155;
+
+}
+
+
+/* ========================= */
+/* Headings                  */
+/* ========================= */
+
+h1{
+
+    text-align:center;
+
+    /* Light blue accent color, used consistently for the main title */
+    color:#60a5fa;
+
+    margin-bottom:10px;
+
+    font-size:38px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#cbd5e1;
+
+    margin-bottom:35px;
+
+}
+
+/* Section headings: "Upload Document", "Select Document",
+   "Ask a Question", "Answer" */
+h2{
+
+    color:#93c5fd;
+
+    margin-top:25px;
+
+    margin-bottom:12px;
+
+    font-size:20px;
+
+}
+
+
+/* ========================= */
+/* Divider                   */
+/* ========================= */
+
+/* Thin horizontal line separating each section of the form */
+hr{
+
+    border:none;
+
+    height:1px;
+
+    background:#334155;
+
+    margin:30px 0;
+
+}
+
+
+/* ========================= */
+/* Upload Input               */
+/* ========================= */
+
+input[type=file]{
+
+    width:100%;
+
+    color:white;
+
+    margin-bottom:20px;
+
+}
+
+/* Styles the actual "Choose File" button that browsers render
+   for file inputs — this is the only reliable cross-browser hook
+   for customizing it */
+input[type=file]::file-selector-button{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 18px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    margin-right:15px;
+
+    transition:.3s;
+
+}
+
+input[type=file]::file-selector-button:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+/* ========================= */
+/* Dropdown                  */
+/* ========================= */
+
+/* Shared by both #documentSelect and #mode */
+select{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    border:1px solid #475569;
+
+    background:#0f172a;
+
+    color:white;
+
+    margin-bottom:20px;
+
+    font-size:16px;
+
+}
+
+
+/* ========================= */
+/* Question Box               */
+/* ========================= */
+
+textarea{
+
+    width:100%;
+
+    /* Prevents the user from manually resizing it and breaking
+       the card's layout */
+    resize:none;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    border:1px solid #475569;
+
+    background:#0f172a;
+
+    color:white;
+
+    font-size:16px;
+
+    margin-bottom:20px;
+
+}
+
+/* Blue focus ring on both the textarea and dropdowns when
+   the user clicks into them, instead of the default browser outline */
+textarea:focus,
+select:focus{
+
+    outline:none;
+
+    border-color:#3b82f6;
+
+}
+
+
+/* ========================= */
+/* Buttons                   */
+/* ========================= */
+
+/* Base style applies to Upload, Ask, and both modal buttons,
+   since they're all plain <button> elements */
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    /* Signature blue-to-purple gradient used for primary actions */
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+
+    color:white;
+
+    transition:.3s;
+
+    margin-bottom:15px;
+
+}
+
+button:hover{
+
+    /* Slight lift + glow on hover for a "clickable" feel */
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 25px rgba(59,130,246,.35);
+
+}
+
+
+/* ========================= */
+/* Upload Status              */
+/* ========================= */
+
+/* #message shows success text from script.js after /upload
+   completes (e.g. "Document uploaded and indexed successfully.") */
+#message{
+
+    margin-top:10px;
+
+    color:#22c55e;
+
+    font-weight:500;
+
+    /* Respects \n in the message string (used when Pages/Chunks
+       are appended on new lines) */
+    white-space:pre-line;
+
+}
+
+
+/* ========================= */
+/* Answer Box                 */
+/* ========================= */
+
+#answer{
+
+    margin-top:15px;
+
+    background:#0f172a;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    min-height:160px;
+
+    color:#f8fafc;
+
+    line-height:1.8;
+
+    /* Preserves line breaks in longer AI answers while still
+       wrapping long lines instead of overflowing horizontally */
+    white-space:pre-wrap;
+
+    overflow-y:auto;
+
+}
+
+
+/* ========================= */
+/* Modal                     */
+/* ========================= */
+
+/* Full-screen dimmed backdrop, shown when a document isn't found
+   and the backend sets allow_web_search: true.
+   Toggled via the "hidden" class in script.js. */
+.modal-overlay{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    /* Sits above everything else on the page */
+    z-index:1000;
+
+}
+
+/* script.js adds/removes this class to show/hide the modal --
+   simpler than toggling inline styles from JS */
+.modal-overlay.hidden{
+
+    display:none;
+
+}
+
+/* The actual dialog box, centered inside the dimmed overlay */
+.modal-box{
+
+    width:380px;
+
+    background:#1e293b;
+
+    border:1px solid #334155;
+
+    border-radius:14px;
+
+    padding:28px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+
+    text-align:center;
+
+}
+
+.modal-box p{
+
+    color:#f8fafc;
+
+    margin-bottom:12px;
+
+    line-height:1.6;
+
+}
+
+/* The smaller "Would you like to search the web instead?" line */
+.modal-subtext{
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+}
+
+.modal-actions{
+
+    margin-top:20px;
+
+}
+
+.modal-actions button{
+
+    margin-bottom:10px;
+
+}
+
+/* Muted grey variant for the "Cancel" button, so it doesn't
+   compete visually with the primary blue/purple "Search Web" button */
+button.secondary{
+
+    background:#334155;
+
+}
+
+button.secondary:hover{
+
+    box-shadow:0 12px 25px rgba(51,65,85,.35);
+
+}
+
+
+/* ========================= */
+/* Responsive                 */
+/* ========================= */
+
+/* Below 900px, the container goes full-width with tighter padding
+   and a smaller title, so it doesn't overflow on tablets/phones */
+@media(max-width:900px){
+
+.container{
+
+    width:100%;
+
+    padding:25px;
+
+}
+
+h1{
+
+    font-size:30px;
+
+}
+
+}
